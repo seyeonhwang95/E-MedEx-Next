@@ -1,0 +1,20 @@
+{
+  "name": "@emedex/desktop",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "corepack pnpm --filter @emedex/web build:desktop && tsc -p tsconfig.json",
+    "dev": "electron --import tsx ./electron.main.ts",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "start": "node ./scripts/start-built.mjs",
+    "start:built": "corepack pnpm run build && node ./scripts/start-built.mjs",
+    "test": "node --test",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "electron": "^35.0.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.3"
+  }
+}

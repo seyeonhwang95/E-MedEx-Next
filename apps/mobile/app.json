@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "E-MedEx Next Field Intake",
+    "slug": "emedex-next-field-intake",
+    "scheme": "emedex",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "e-medex-next",
+  "private": true,
+  "packageManager": "pnpm@10.6.0",
+  "engines": {
+    "node": ">=22 <23",
+    "pnpm": ">=10.6.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "build:desktop": "corepack pnpm --filter @emedex/desktop build",
+    "dev": "turbo run dev --parallel",
+    "dev:web": "corepack pnpm --filter @emedex/web dev",
+    "dev:api": "corepack pnpm --filter @emedex/api dev",
+    "dev:api:watch": "corepack pnpm --filter @emedex/api dev:watch",
+    "dev:api:stack": "docker compose up -d && corepack pnpm --filter @emedex/api build && corepack pnpm --filter @emedex/api dev:built",
+    "stop:api:stack": "docker compose down",
+    "dev:gateway": "corepack pnpm --filter @emedex/hl7-gateway dev",
+    "dev:desktop": "corepack pnpm --filter @emedex/desktop dev",
+    "dev:desktop:built": "corepack pnpm --filter @emedex/desktop start:built",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "eslint": "^9.22.0",
+    "prettier": "^3.5.3",
+    "turbo": "^2.5.0",
+    "typescript": "^5.8.2"
+  }
+}

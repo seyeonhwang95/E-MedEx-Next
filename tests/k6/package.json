@@ -1,0 +1,10 @@
+{
+  "name": "@emedex/k6-tests",
+  "private": true,
+  "scripts": {
+    "build": "echo k6 scripts do not build",
+    "lint": "echo no-op",
+    "test": "echo use k6 run tests/k6/case-workspace.js",
+    "typecheck": "echo no-op"
+  }
+}

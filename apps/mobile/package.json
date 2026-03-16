@@ -1,0 +1,23 @@
+{
+  "name": "@emedex/mobile",
+  "private": true,
+  "main": "expo/AppEntry",
+  "scripts": {
+    "build": "echo mobile build scaffolded",
+    "dev": "expo start",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@emedex/domain": "workspace:*",
+    "@emedex/theme": "workspace:*",
+    "@emedex/ui-native": "workspace:*",
+    "expo": "^53.0.0",
+    "react": "^19.0.0",
+    "react-native": "0.79.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.10"
+  }
+}

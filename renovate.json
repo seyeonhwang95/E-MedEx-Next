@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":automergePatch",
+    ":automergeMinor"
+  ],
+  "schedule": [
+    "before 6am every monday"
+  ],
+  "rangeStrategy": "pin",
+  "packageRules": [
+    {
+      "matchManagers": ["docker-compose", "dockerfile", "npm"],
+      "automerge": true,
+      "matchUpdateTypes": ["patch", "minor"]
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "@emedex/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "pnpm run build && node dist/main.js",
+    "dev:watch": "tsx watch src/main.ts",
+    "dev:built": "node dist/main.js",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "tsc -p tsconfig.test.json && node --test .test-dist/test/**/*.test.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "typeorm:control:migrate": "typeorm-ts-node-esm -d src/persistence/control-plane.datasource.ts migration:run",
+    "typeorm:tenant:migrate": "typeorm-ts-node-esm -d src/persistence/tenant-data.datasource.ts migration:run"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0",
+    "@nestjs/platform-express": "^11.0.0",
+    "@nestjs/swagger": "^8.0.0",
+    "@nestjs/typeorm": "^11.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "express": "^5.1.0",
+    "jose": "^6.1.0",
+    "pg": "^8.14.1",
+    "reflect-metadata": "^0.2.2",
+    "swagger-ui-express": "^5.0.0",
+    "rxjs": "^7.8.2",
+    "typeorm": "^0.3.22"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^11.0.0",
+    "@types/express": "^5.0.3",
+    "@types/supertest": "^6.0.3",
+    "supertest": "^7.1.1",
+    "tsx": "^4.19.3",
+    "typeorm-ts-node-esm": "^0.3.20"
+  }
+}
