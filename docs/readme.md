@@ -466,3 +466,71 @@ Other core entities (must):
 - Admin consoles (tenant, roles, devices, labs, audit)
 
 ---
+
+## Requirement: Latest Stable/LTS Tech + Security-First Dependencies (Must)
+
+**Goal:** Prevent security risk from outdated tooling by enforcing **latest stable/LTS** versions and continuous updates with CI gates.
+
+### 1) Version policy (must)
+Use **latest stable/LTS** (not bleeding-edge prerelease) across the monorepo:
+
+- **Node.js:** current **LTS** only  
+  - enforce with `.nvmrc` and `package.json#engines.node`
+- **pnpm:** latest stable (pin minimum version in `package.json#engines.pnpm`)
+- **TypeScript:** latest stable
+- **React (web):** latest stable major
+- **React Native (mobile):** latest stable major compatible with chosen workflow (Expo or bare)
+- **NestJS:** latest stable
+- **PostgreSQL / Redis / OpenSearch / MinIO:** latest stable major versions used in Docker Compose and production
+
+Maintain a `docs/versions.md` (or top-of-README table) that lists the pinned major versions and upgrade cadence.
+
+### 2) Dependency governance (must)
+- Use **pnpm workspaces** for the entire repo.
+- Commit the lockfile (`pnpm-lock.yaml`).
+- Enforce workspace alignment (no multiple React versions).
+- Prefer well-maintained libraries with active security support.
+
+### 3) Automated updates (must)
+Enable **Renovate or Dependabot**:
+- schedule: weekly
+- auto-merge: patch/minor updates when CI passes
+- manual review: major updates
+- must open PRs for Docker image updates (Postgres/Redis/OpenSearch/MinIO) as well.
+
+### 4) Security scanning + CI gates (must)
+CI must include:
+- Dependency vulnerability scanning:
+  - `pnpm audit` (or equivalent) and fail build on **high/critical**
+  - allow temporary exceptions only via an allowlist with an **expiry date** documented
+- SAST:
+  - CodeQL for TypeScript/JavaScript (minimum)
+- Secret scanning:
+  - never commit `.env`, private keys, tokens; require `.gitignore` and pre-commit checks
+- Container image scanning (recommended):
+  - Trivy scan for built images and docker compose images
+
+### 5) Cryptography and auth safety (must)
+- Offline encryption:
+  - use modern authenticated encryption (AES-GCM or platform equivalents)
+  - PIN-based unlock uses a strong KDF (Argon2id preferred; otherwise scrypt)
+- JWT validation must enforce:
+  - issuer + audience validation
+  - algorithm allowlist (no `none`)
+  - strict expiration and limited clock skew
+- Enforce TLS for all non-local traffic.
+- HL7 MLLP networking must be deployed behind secure network controls (VPN/mTLS/allowlist) per lab requirements.
+
+### 6) “No EOL at release” gate (must)
+- No runtime/framework versions that are **EOL** at the time of release.
+- Quarterly maintenance requirement:
+  - upgrade major versions as needed (planned window)
+  - rotate secrets/keys
+  - validate backup + restore per tenant
+
+### 7) Developer experience enforcement (must)
+- CI must fail if:
+  - Node version differs from `.nvmrc`/`engines`
+  - pnpm version below minimum
+- Provide a single command to validate repo health:
+  - `pnpm -r lint && pnpm -r test` (or equivalent)
